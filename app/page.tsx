@@ -6,7 +6,7 @@ export default function Home() {
         <h1>Welcome to Demo Next.js App</h1>
         <p>
           This is a demo application created to test the Backstage Platform template
-          for Next.js applications with GCS + nginx deployment. Testing push.
+          for Next.js applications with GCS + nginx deployment. Testing push. second push.
         </p>
       </div>
 
