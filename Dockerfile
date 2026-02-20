@@ -33,23 +33,6 @@ FROM nginx:alpine
 # Copy compressed static files
 COPY --from=compressor /app/build /usr/share/nginx/html
 
-# Copy nginx configuration
-COPY nginx.conf /etc/nginx/nginx.conf
-
-# Copy startup script
-COPY start-nginx.sh /start-nginx.sh
-
-# Make startup script executable
-RUN chmod +x /start-nginx.sh
-
-# Create non-root user for security
-RUN addgroup -g 10001 -S nonroot && \
-    adduser -u 10001 -S nonroot -G nonroot && \
-    chown -R nonroot:nonroot /usr/share/nginx/html /var/cache/nginx /var/log/nginx /etc/nginx/conf.d /var/run
-
-# Switch to non-root user
-USER nonroot
-
 # Expose port 80
 EXPOSE 80
 
@@ -58,4 +41,4 @@ HEALTHCHECK --interval=30s --timeout=3s --start-period=5s --retries=3 \
   CMD wget --no-verbose --tries=1 --spider http://localhost:80/ || exit 1
 
 # Start nginx
-CMD ["/start-nginx.sh"]
+CMD ["nginx", "-g", "daemon off;"]
